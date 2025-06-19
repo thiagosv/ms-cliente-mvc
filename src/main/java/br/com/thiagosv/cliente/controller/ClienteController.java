@@ -60,9 +60,7 @@ public final class ClienteController {
             @RequestBody @Valid AtualizarClienteRequest request
     ) {
         log.info("Realizando atualizacao de usuario: id [{}] | {}", id, request);
-        return clienteService.atualizarCliente(id, request)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(clienteService.atualizarCliente(id, request));
     }
 
     @DeleteMapping("/{id}")

@@ -53,20 +53,25 @@ public class ClienteService {
 
     @Transactional
     public ClienteResponse criarCliente(CriarClienteRequest request) {
-        ClienteModel clienteModel = clienteMapper.model(request);
         if (clienteRepository.existsByEmailAndStatus(request.getEmail(), StatusCliente.ATIVO))
             throw new DomainException("Já existe um cliente ativo com este email");
+        ClienteModel clienteModel = clienteMapper.model(request);
         eventoRepository.publicar(clienteModel, ClienteEvento.TipoEventoCliente.CLIENTE_CRIADO);
         return clienteMapper.response(clienteRepository.save(clienteModel));
     }
 
     @Transactional
-    public Optional<ClienteResponse> atualizarCliente(String id, AtualizarClienteRequest request) {
+    public ClienteResponse atualizarCliente(String id, AtualizarClienteRequest request) {
         return clienteRepository.findById(id)
                 .map(cliente -> {
                     this.validaAtualizacao(request, cliente);
+                    cliente.setNome(request.getNome());
+                    cliente.setEmail(request.getEmail());
+                    cliente.setDataNascimento(request.getDataNascimento());
+                    cliente.setNumeroCelular(request.getNumeroCelular());
+
                     eventoRepository.publicar(cliente, ClienteEvento.TipoEventoCliente.CLIENTE_ATUALIZADO);
-                    return Optional.ofNullable(clienteMapper.response(clienteRepository.save(cliente)));
+                    return clienteMapper.response(clienteRepository.save(cliente));
                 })
                 .orElseThrow(() -> new DomainException("Cliente não encontrado."));
     }
@@ -81,9 +86,9 @@ public class ClienteService {
     }
 
     private void validaAtualizacao(AtualizarClienteRequest request, ClienteModel clienteModel) {
-        if(!clienteModel.getEmail().equals(request.getEmail()) && clienteRepository.existsByEmailAndStatus(request.getEmail(), StatusCliente.ATIVO))
-            throw new DomainException("Este email já está em uso por outro cliente ativo");
         if(!clienteModel.isAtivo())
             throw new DomainException("Não é possível atualizar um cliente inativo");
+        if(!clienteModel.getEmail().equals(request.getEmail()) && clienteRepository.existsByEmailAndStatus(request.getEmail(), StatusCliente.ATIVO))
+            throw new DomainException("Este email já está em uso por outro cliente ativo");
     }
 }
