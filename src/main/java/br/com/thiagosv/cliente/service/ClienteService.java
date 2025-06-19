@@ -1,7 +1,9 @@
 package br.com.thiagosv.cliente.service;
 
 import br.com.thiagosv.cliente.controller.request.AtualizarClienteRequest;
+import br.com.thiagosv.cliente.controller.request.ClienteFiltrosRequest;
 import br.com.thiagosv.cliente.controller.request.CriarClienteRequest;
+import br.com.thiagosv.cliente.controller.response.ClientePageableResponse;
 import br.com.thiagosv.cliente.controller.response.ClienteResponse;
 import br.com.thiagosv.cliente.exceptions.DomainException;
 import br.com.thiagosv.cliente.mapper.ClienteMapper;
@@ -11,12 +13,14 @@ import br.com.thiagosv.cliente.model.StatusCliente;
 import br.com.thiagosv.cliente.repository.ClienteRepository;
 import br.com.thiagosv.cliente.repository.EventoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,11 +30,19 @@ public class ClienteService {
     private final EventoRepository eventoRepository;
     private final ClienteMapper clienteMapper = ClienteMapper.INSTANCE;
 
-    public final List<ClienteResponse> listarClientes() {
-        return clienteRepository.findByStatusAtivo()
-                .stream()
-                .map(clienteMapper::response)
-                .collect(Collectors.toList());
+    public final ClientePageableResponse listarClientes(ClienteFiltrosRequest filtros, int pagina, int tamanho) {
+        Pageable pageable = PageRequest.of(pagina, tamanho);
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withStringMatcher(ExampleMatcher.StringMatcher.EXACT);
+
+        Example<ClienteModel> example = Example.of(clienteMapper.model(filtros), matcher);
+
+        return clienteMapper.response(clienteRepository.findAll(example, pageable));
+    }
+
+    public final Long contarClientes() {
+        return clienteRepository.count();
     }
 
     public final Optional<ClienteResponse> buscarPorId(String id) {

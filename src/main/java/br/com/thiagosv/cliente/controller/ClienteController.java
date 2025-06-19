@@ -1,18 +1,18 @@
 package br.com.thiagosv.cliente.controller;
 
 import br.com.thiagosv.cliente.controller.request.AtualizarClienteRequest;
+import br.com.thiagosv.cliente.controller.request.ClienteFiltrosRequest;
 import br.com.thiagosv.cliente.controller.request.CriarClienteRequest;
+import br.com.thiagosv.cliente.controller.response.ClientePageableResponse;
 import br.com.thiagosv.cliente.controller.response.ClienteResponse;
 import br.com.thiagosv.cliente.service.ClienteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cliente")
@@ -22,10 +22,21 @@ public final class ClienteController {
 
     private final ClienteService clienteService;
 
-    @GetMapping
-    public ResponseEntity<Collection<ClienteResponse>> listarClientes() {
-        List<ClienteResponse> clientes = clienteService.listarClientes();
+    @GetMapping("/pagina/{pagina}/tamanho/{tamanho}")
+    public ResponseEntity<ClientePageableResponse> listarClientes(
+            @PathVariable(value = "pagina") int pagina,
+            @PathVariable(value = "tamanho") int tamanho,
+            @ParameterObject ClienteFiltrosRequest filtros
+    ) {
+        log.info("Retornando todos os clientes paginados");
+        ClientePageableResponse clientes = clienteService.listarClientes(filtros, pagina, tamanho);
         return ResponseEntity.ok(clientes);
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<Long> contarClientes() {
+        log.info("Retornando total de clientes");
+        return ResponseEntity.ok(clienteService.contarClientes());
     }
 
     @GetMapping("/{id}")
