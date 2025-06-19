@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: ms-cliente-mvc
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ms-cliente-db
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 5
+
+app:
+  kafka:
+    topic:
+      cliente-eventos: cliente-eventos-v1
