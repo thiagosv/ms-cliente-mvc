@@ -42,4 +42,10 @@ public final class ControllerExceptionHandler {
         log.error("Ocorreu um erro interno no servidor. Erro: {}", ex.getMessage(), ex);
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ocorreu um erro interno no servidor");
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(Exception.class)
+    public ErrorResponse handleRegistroNaoEncontradoException(Exception ex) {
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
 }

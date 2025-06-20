@@ -6,6 +6,7 @@ import br.com.thiagosv.cliente.controller.request.CriarClienteRequest;
 import br.com.thiagosv.cliente.controller.response.ClientePageableResponse;
 import br.com.thiagosv.cliente.controller.response.ClienteResponse;
 import br.com.thiagosv.cliente.exceptions.DomainException;
+import br.com.thiagosv.cliente.exceptions.RegistroNaoEncontradoException;
 import br.com.thiagosv.cliente.mapper.ClienteMapper;
 import br.com.thiagosv.cliente.model.ClienteEvento;
 import br.com.thiagosv.cliente.model.ClienteModel;
@@ -78,7 +79,7 @@ public class ClienteService {
 
     @Transactional
     public void deletarCliente(String id) {
-        ClienteModel clienteModel = clienteRepository.findById(id).orElseThrow(() -> new DomainException("Cliente não encontrado."));
+        ClienteModel clienteModel = clienteRepository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Cliente não encontrado."));
 
         clienteModel.inativar();
         clienteRepository.save(clienteModel);
