@@ -11,6 +11,12 @@
 * CLIENTE_ATUALIZADO - Disparado na atualização de dados do cliente
 * CLIENTE_DELETADO - Disparado na exclusão do cliente
 
+## Diagramas
+### Sequência
+* [Listar cliente](.docs/c4/code/ListarCliente.md)
+* [Atualização de cliente](.docs/c4/code/AtualizacaoCliente.md)
+* [Criação de cliente](.docs/c4/code/CriacaoCliente.md)
+* [Deleção de cliente](.docs/c4/code/DelecaoCliente.md)
 
 ## 📁 Árvore de Diretórios
 ```
