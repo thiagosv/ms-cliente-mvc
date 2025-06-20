@@ -1,4 +1,16 @@
-# CRUD Cliente - Sistema de Gestão
+# Sistema de Gestão de clientes
+
+<!-- TOC -->
+* [Sistema de Gestão de clientes](#sistema-de-gestão-de-clientes)
+  * [Tecnologias Utilizadas](#tecnologias-utilizadas)
+  * [Eventos de Negócio](#eventos-de-negócio)
+  * [Diagramas](#diagramas)
+  * [📁 Árvore de Diretórios](#-árvore-de-diretórios)
+  * [📋 Descrição dos Pacotes](#-descrição-dos-pacotes)
+    * [🏗️ **Camada Principal (src/main/java/br/com/thiagosv/cliente/)**](#-camada-principal-srcmainjavabrcomthiagosvcliente)
+    * [🐳 **Infraestrutura**](#-infraestrutura)
+<!-- TOC -->
+
 ## Tecnologias Utilizadas
 * Java 17 - Linguagem principal
 * Spring Boot 3.5 - Framework de aplicação
@@ -12,7 +24,6 @@
 * CLIENTE_DELETADO - Disparado na exclusão do cliente
 
 ## Diagramas
-### Sequência
 * [Listar cliente](.docs/c4/code/ListarCliente.md)
 * [Atualização de cliente](.docs/c4/code/AtualizacaoCliente.md)
 * [Criação de cliente](.docs/c4/code/CriacaoCliente.md)
