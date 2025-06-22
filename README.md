@@ -10,7 +10,6 @@
       * [Decisão (Negócio)](#decisão-negócio)
       * [Sequêncial](#sequêncial)
   * [🧑‍💼Eventos de Negócio - cliente-eventos-v1](#eventos-de-negócio---cliente-eventos-v1)
-    * [Exemplo de JSON](#exemplo-de-json)
   * [📁 Árvore de Diretórios/Pacotes](#-árvore-de-diretóriospacotes)
   * [🌍 Ambiente](#-ambiente)
       * [Necessário](#necessário)
@@ -47,20 +46,9 @@ Além deste, se necessário, pode ser acessado o  [yaml do swagger](.docs/openap
 * [Deleção de cliente](.docs/sequencia/DelecaoCliente.md)
 
 ## 🧑‍💼Eventos de Negócio - cliente-eventos-v1
-* CLIENTE_CRIADO - Disparado na criação de novo cliente
-* CLIENTE_ATUALIZADO - Disparado na atualização de dados do cliente
-* CLIENTE_DELETADO - Disparado na exclusão do cliente
-
-### Exemplo de JSON
-```
-{
-    "evento": "CLIENTE_CRIADO",
-    "id": "68546b7431de3b531fdfc7e5"
-    "email": "thiagosilvavieira97@gmail.com"
-    "nome": "Thiago Vieira"
-    "timestamp": "2025-06-20T02:18:00"
-}
-```
+* [CLIENTE_CRIADO](.docs/kafka/cliente-eventos-v1/CriacaoCliente.json) - Disparado na criação de novo cliente
+* [CLIENTE_ATUALIZADO](.docs/kafka/cliente-eventos-v1/AtualizacaoCliente.json) - Disparado na atualização de dados do cliente
+* [CLIENTE_DELETADO](.docs/kafka/cliente-eventos-v1/DelecaoCliente.json) - Disparado na exclusão do cliente
 
 ## 📁 Árvore de Diretórios/Pacotes
 ```

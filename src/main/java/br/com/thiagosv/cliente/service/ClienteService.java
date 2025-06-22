@@ -55,9 +55,9 @@ public class ClienteService implements ClienteServiceInterface {
     public ClienteResponse criarCliente(CriarClienteRequest request) {
         if (clienteRepository.existsByEmailAndStatus(request.getEmail(), StatusCliente.ATIVO))
             throw new DomainException("Já existe um cliente ativo com este email");
-        ClienteModel clienteModel = clienteMapper.model(request);
+        ClienteModel clienteModel = clienteRepository.save(clienteMapper.model(request));
         eventoRepository.publicar(clienteModel, TipoEventoCliente.CLIENTE_CRIADO);
-        return clienteMapper.response(clienteRepository.save(clienteModel));
+        return clienteMapper.response(clienteModel);
     }
 
     @Transactional
