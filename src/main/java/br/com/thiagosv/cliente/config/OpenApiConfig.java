@@ -14,7 +14,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("API de Clientes")
-                        .description("API para gerenciamento de clientes")
+                        .description("API para gerenciamento de clientes. Esta API foi criada como desafio do Bootcampo de arquitetura de software.")
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Thiago SV")
