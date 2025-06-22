@@ -1,0 +1,362 @@
+openapi: 3.0.4
+info:
+  title: API de Clientes
+  description: API para gerenciamento de clientes
+  contact:
+    name: Thiago SV
+    email: contato@thiagosv.com.br
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+tags:
+  - name: Clientes
+    description: Operações relacionadas ao gerenciamento de clientes
+paths:
+  /api/v1/cliente/{id}:
+    get:
+      tags:
+        - Clientes
+      summary: Busca de clientes por ID
+      description: Retorna um cliente a partir do ID informado
+      operationId: buscarPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente retornado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: object
+                    additionalProperties:
+                      type: string
+        '404':
+          description: Nenhum cliente encontrado com o ID informado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - Clientes
+      summary: Atualização de cliente pré existente
+      description: Realiza a atualização de um cliente pré existente
+      operationId: atualizar
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarClienteRequest'
+        required: true
+      responses:
+        '200':
+          description: Cliente atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteResponse'
+        '400':
+          description: Informações disponibilizadas de forma incorreta para criação de cliente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Cliente informado não existe, a partir do ID informado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Clientes
+      summary: Deleção de cliente pré existente
+      description: Realiza a deleção de um cliente pré existente
+      operationId: excluir
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente deletado com sucesso
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: object
+                    additionalProperties:
+                      type: string
+        '404':
+          description: Cliente informado não existe, a partir do ID informado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/cliente:
+    post:
+      tags:
+        - Clientes
+      summary: Criação de cliente
+      description: Realiza a criação de cliente a partir das informações disponibilizadas
+      operationId: criar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriarClienteRequest'
+        required: true
+      responses:
+        '201':
+          description: Cliente criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteResponse'
+        '400':
+          description: Informações disponibilizadas de forma incorreta para criação de cliente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/cliente/total:
+    get:
+      tags:
+        - Clientes
+      summary: Contador de clientes
+      description: Retorna o total de clientes cadastrado na base
+      operationId: contar
+      responses:
+        '200':
+          description: Total de clientes retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: object
+                    additionalProperties:
+                      type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/cliente/pagina/{pagina}/tamanho/{tamanho}:
+    get:
+      tags:
+        - Clientes
+      summary: Listar clientes
+      description: Retorna uma lista paginada de clientes com filtros opcionais
+      operationId: listar
+      parameters:
+        - name: pagina
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: tamanho
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: nome
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: dataNascimento
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: numeroCelular
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de clientes retornada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientePageableResponse'
+        '400':
+          description: Parâmetros de paginação inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        mensagem:
+          type: string
+    AtualizarClienteRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+          maxLength: 100
+          minLength: 2
+        email:
+          type: string
+          minLength: 1
+        dataNascimento:
+          type: string
+          format: date
+        numeroCelular:
+          type: string
+          pattern: ^[0-9]{11}$
+      required:
+        - dataNascimento
+        - email
+        - nome
+        - numeroCelular
+    ClienteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        email:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+        numeroCelular:
+          type: string
+        status:
+          type: string
+          enum:
+            - ATIVO
+            - INATIVO
+    CriarClienteRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+          maxLength: 100
+          minLength: 2
+        email:
+          type: string
+          minLength: 1
+        dataNascimento:
+          type: string
+          format: date
+        numeroCelular:
+          type: string
+          pattern: ^[0-9]{11}$
+      required:
+        - dataNascimento
+        - email
+        - nome
+        - numeroCelular
+    ClientePageableResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClienteResponse'
+        totalElements:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
