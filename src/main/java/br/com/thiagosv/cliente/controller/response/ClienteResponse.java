@@ -1,6 +1,6 @@
 package br.com.thiagosv.cliente.controller.response;
 
-import br.com.thiagosv.cliente.model.StatusCliente;
+import br.com.thiagosv.cliente.model.enums.StatusCliente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

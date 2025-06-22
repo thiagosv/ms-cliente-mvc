@@ -8,9 +8,9 @@ import br.com.thiagosv.cliente.controller.response.ClienteResponse;
 import br.com.thiagosv.cliente.exceptions.DomainException;
 import br.com.thiagosv.cliente.exceptions.RegistroNaoEncontradoException;
 import br.com.thiagosv.cliente.mapper.ClienteMapper;
-import br.com.thiagosv.cliente.model.ClienteEvento;
 import br.com.thiagosv.cliente.model.ClienteModel;
-import br.com.thiagosv.cliente.model.StatusCliente;
+import br.com.thiagosv.cliente.model.enums.StatusCliente;
+import br.com.thiagosv.cliente.model.enums.TipoEventoCliente;
 import br.com.thiagosv.cliente.repository.ClienteRepository;
 import br.com.thiagosv.cliente.repository.EventoRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ClienteService {
+public class ClienteService implements ClienteServiceInterface {
 
     private final ClienteRepository clienteRepository;
     private final EventoRepository eventoRepository;
@@ -46,10 +46,11 @@ public class ClienteService {
         return clienteRepository.count();
     }
 
-    public final Optional<ClienteResponse> buscarPorId(String id) {
+    public final ClienteResponse buscarPorId(String id) {
         return clienteRepository.findById(id)
                 .filter(ClienteModel::isAtivo)
-                .map(clienteMapper::response);
+                .map(clienteMapper::response)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Cliente não encontrado."));
     }
 
     @Transactional
@@ -57,7 +58,7 @@ public class ClienteService {
         if (clienteRepository.existsByEmailAndStatus(request.getEmail(), StatusCliente.ATIVO))
             throw new DomainException("Já existe um cliente ativo com este email");
         ClienteModel clienteModel = clienteMapper.model(request);
-        eventoRepository.publicar(clienteModel, ClienteEvento.TipoEventoCliente.CLIENTE_CRIADO);
+        eventoRepository.publicar(clienteModel, TipoEventoCliente.CLIENTE_CRIADO);
         return clienteMapper.response(clienteRepository.save(clienteModel));
     }
 
@@ -71,10 +72,10 @@ public class ClienteService {
                     cliente.setDataNascimento(request.getDataNascimento());
                     cliente.setNumeroCelular(request.getNumeroCelular());
 
-                    eventoRepository.publicar(cliente, ClienteEvento.TipoEventoCliente.CLIENTE_ATUALIZADO);
+                    eventoRepository.publicar(cliente, TipoEventoCliente.CLIENTE_ATUALIZADO);
                     return clienteMapper.response(clienteRepository.save(cliente));
                 })
-                .orElseThrow(() -> new DomainException("Cliente não encontrado."));
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Cliente não encontrado."));
     }
 
     @Transactional
@@ -83,7 +84,7 @@ public class ClienteService {
 
         clienteModel.inativar();
         clienteRepository.save(clienteModel);
-        eventoRepository.publicar(clienteModel, ClienteEvento.TipoEventoCliente.CLIENTE_DELETADO);
+        eventoRepository.publicar(clienteModel, TipoEventoCliente.CLIENTE_DELETADO);
     }
 
     private void validaAtualizacao(AtualizarClienteRequest request, ClienteModel clienteModel) {

@@ -5,7 +5,7 @@ import br.com.thiagosv.cliente.controller.request.ClienteFiltrosRequest;
 import br.com.thiagosv.cliente.controller.request.CriarClienteRequest;
 import br.com.thiagosv.cliente.controller.response.ClientePageableResponse;
 import br.com.thiagosv.cliente.controller.response.ClienteResponse;
-import br.com.thiagosv.cliente.service.ClienteService;
+import br.com.thiagosv.cliente.service.ClienteServiceInterface;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 public final class ClienteController {
 
-    private final ClienteService clienteService;
+    private final ClienteServiceInterface clienteService;
 
     @GetMapping("/pagina/{pagina}/tamanho/{tamanho}")
-    public ResponseEntity<ClientePageableResponse> listarClientes(
+    public ResponseEntity<ClientePageableResponse> listar(
             @PathVariable(value = "pagina") int pagina,
             @PathVariable(value = "tamanho") int tamanho,
             @ParameterObject ClienteFiltrosRequest filtros
@@ -34,28 +34,26 @@ public final class ClienteController {
     }
 
     @GetMapping("/total")
-    public ResponseEntity<Long> contarClientes() {
+    public ResponseEntity<Long> contar() {
         log.info("Retornando total de clientes");
         return ResponseEntity.ok(clienteService.contarClientes());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteResponse> buscarClientePorId(@PathVariable("id") String id) {
+    public ResponseEntity<ClienteResponse> buscarPorId(@PathVariable("id") String id) {
         log.info("Realizando busca por id: {}", id);
-        return clienteService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<ClienteResponse> criarCliente(@RequestBody @Valid CriarClienteRequest request) {
+    public ResponseEntity<ClienteResponse> criar(@RequestBody @Valid CriarClienteRequest request) {
         log.info("Realizando criacao de usuario: {}", request);
         ClienteResponse novoCliente = clienteService.criarCliente(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteResponse> atualizarCliente(
+    public ResponseEntity<ClienteResponse> atualizar(
             @PathVariable("id") String id,
             @RequestBody @Valid AtualizarClienteRequest request
     ) {
@@ -64,7 +62,7 @@ public final class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluirCliente(@PathVariable String id) {
+    public ResponseEntity<Void> excluir(@PathVariable String id) {
         log.info("Realizando delecao de usuario {}", id);
         clienteService.deletarCliente(id);
         return ResponseEntity.noContent().build();

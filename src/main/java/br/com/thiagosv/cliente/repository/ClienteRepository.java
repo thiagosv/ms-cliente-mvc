@@ -1,7 +1,7 @@
 package br.com.thiagosv.cliente.repository;
 
 import br.com.thiagosv.cliente.model.ClienteModel;
-import br.com.thiagosv.cliente.model.StatusCliente;
+import br.com.thiagosv.cliente.model.enums.StatusCliente;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

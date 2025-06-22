@@ -1,6 +1,7 @@
 package br.com.thiagosv.cliente.controller;
 
 import br.com.thiagosv.cliente.exceptions.DomainException;
+import br.com.thiagosv.cliente.exceptions.RegistroNaoEncontradoException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -44,8 +45,8 @@ public final class ControllerExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(Exception.class)
-    public ErrorResponse handleRegistroNaoEncontradoException(Exception ex) {
+    @ExceptionHandler(RegistroNaoEncontradoException.class)
+    public ErrorResponse handleRegistroNaoEncontradoException(RegistroNaoEncontradoException ex) {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
 }

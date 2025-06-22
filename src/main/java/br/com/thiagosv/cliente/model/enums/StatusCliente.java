@@ -1,4 +1,4 @@
-package br.com.thiagosv.cliente.model;
+package br.com.thiagosv.cliente.model.enums;
 
 public enum StatusCliente {
     ATIVO,

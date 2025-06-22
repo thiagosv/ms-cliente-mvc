@@ -1,5 +1,6 @@
 package br.com.thiagosv.cliente.model;
 
+import br.com.thiagosv.cliente.model.enums.StatusCliente;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
