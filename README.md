@@ -7,6 +7,7 @@
   * [Documentações](#documentações)
     * [Swagger](#swagger)
     * [Diagramas](#diagramas)
+      * [Sequêncial](#sequêncial)
   * [Eventos de Negócio - cliente-eventos-v1](#eventos-de-negócio---cliente-eventos-v1)
     * [Exemplo de JSON](#exemplo-de-json)
   * [📁 Árvore de Diretórios](#-árvore-de-diretórios)
@@ -33,6 +34,7 @@ O projeto possui um swagger detalhado, disponível em `/swagger-ui/index.html#/`
 Além deste, se necessário, pode ser acessado o  [yaml do swagger](.docs/openapi.yaml)
 
 ### Diagramas
+#### Sequêncial
 * [Listar cliente](.docs/c4/code/ListarCliente.md)
 * [Atualização de cliente](.docs/c4/code/AtualizacaoCliente.md)
 * [Criação de cliente](.docs/c4/code/CriacaoCliente.md)
