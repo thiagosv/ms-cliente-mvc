@@ -7,10 +7,8 @@ import br.com.thiagosv.cliente.controller.response.ClienteResponse;
 import br.com.thiagosv.cliente.model.ClienteModel;
 import br.com.thiagosv.cliente.model.enums.StatusCliente;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 
 public class MockUtil {
 
@@ -21,13 +19,6 @@ public class MockUtil {
         response.setEmail(ConstantUtil.EMAIL_VALIDO);
         response.setNumeroCelular(ConstantUtil.NUMERO_CELULAR);
         return response;
-    }
-
-    public static List<ClienteResponse> criarListaClientesResponse() {
-        return Arrays.asList(
-                criarClienteResponse(),
-                criarOutroClienteResponse()
-        );
     }
 
     public static ClientePageableResponse criarClientePageableResponse() {
@@ -52,15 +43,6 @@ public class MockUtil {
         CriarClienteRequest request = new CriarClienteRequest();
         request.setNome(ConstantUtil.NOME_CLIENTE);
         request.setEmail(ConstantUtil.EMAIL_VALIDO);
-        request.setDataNascimento(ConstantUtil.DATA_NASCIMENTO);
-        request.setNumeroCelular(ConstantUtil.NUMERO_CELULAR);
-        return request;
-    }
-
-    public static CriarClienteRequest criarOutroClienteRequest() {
-        CriarClienteRequest request = new CriarClienteRequest();
-        request.setNome(ConstantUtil.OUTRO_NOME_CLIENTE);
-        request.setEmail(ConstantUtil.OUTRO_EMAIL_VALIDO);
         request.setDataNascimento(ConstantUtil.DATA_NASCIMENTO);
         request.setNumeroCelular(ConstantUtil.NUMERO_CELULAR);
         return request;

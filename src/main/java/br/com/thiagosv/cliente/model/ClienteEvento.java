@@ -1,7 +1,6 @@
 package br.com.thiagosv.cliente.model;
 
 import br.com.thiagosv.cliente.model.enums.TipoEventoCliente;
-import lombok.Builder;
 
 import java.time.LocalDateTime;
 

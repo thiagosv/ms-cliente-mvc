@@ -5,9 +5,6 @@ import br.com.thiagosv.cliente.controller.request.ClienteFiltrosRequest;
 import br.com.thiagosv.cliente.controller.request.CriarClienteRequest;
 import br.com.thiagosv.cliente.controller.response.ClientePageableResponse;
 import br.com.thiagosv.cliente.controller.response.ClienteResponse;
-import br.com.thiagosv.cliente.model.ClienteModel;
-
-import java.util.Optional;
 
 public interface ClienteServiceInterface {
     ClientePageableResponse listarClientes(ClienteFiltrosRequest filtros, int pagina, int tamanho);
