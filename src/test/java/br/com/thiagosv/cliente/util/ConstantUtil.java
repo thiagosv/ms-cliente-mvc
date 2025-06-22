@@ -33,8 +33,8 @@ public class ConstantUtil {
     public static final String ERRO_CAMPO_EMAIL = "email";
     public static final String ERRO_MENSAGEM_EMAIL = "Email inválido";
     public static final String ERRO_DOMAIN_MESSAGE = "Erro de domínio teste";
-    public static final String ERRO_AUTENTICACAO_MESSAGE = "Erro de autenticação teste";
     public static final String ERRO_INTERNO_MESSAGE = "Ocorreu um erro interno no servidor";
+    public static final String ERRO_NOT_FOUND = "Cliente nao encontrado";
 
     public static final int PAGINA = 0;
     public static final int TAMANHO = 10;
