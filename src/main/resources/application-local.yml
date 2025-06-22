@@ -3,9 +3,9 @@ spring:
     name: ms-cliente-mvc
   data:
     mongodb:
-      uri: ${MONGODB_URI}
+      uri: mongodb://localhost:27017/ms-cliente-db
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
