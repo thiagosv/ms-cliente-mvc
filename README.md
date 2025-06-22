@@ -40,8 +40,8 @@ No decorrer do README, entenderá as tecnologias utilizadas, documentos criados 
 ```
 {
     "evento": "CLIENTE_CRIADO",
-    "id": "1231dsa87dt67taaduiuvb0"
-    "email": "contato@thiagosv.com.br"
+    "id": "68546b7431de3b531fdfc7e5"
+    "email": "thiagosilvavieira97@gmail.com"
     "nome": "Thiago Vieira"
     "timestamp": "2025-06-20T02:18:00"
 }
@@ -77,12 +77,12 @@ ms-usuario-mvc
 
 | Pacote        | Descrição                                                           |
 |---------------|---------------------------------------------------------------------|
-| `config/`     | Configurações do Spring (OpenApi)                                   |
+| `config/`     | Configurações da aplicação, utilizado para o OpenAPI.               |
 | `controller/` | Controladores REST e tratamento de exceções                         |
-| `exception/`  | Exceções customizadas da aplicação, como DomainException            |
+| `exception/`  | Exceções customizadas, como DomainException                         |
 | `mapper/`     | Conversores entre DTOs e Models                                     |
 | `messaging/`  | Componentes para publicação de eventos (Kafka)                      |
-| `model/`      | Documentos e enums utilizados na persistência com o MongoDB         |
+| `model/`      | Documentos utilizados na persistência com o MongoDB                 |
 | `repository/` | Acesso a dados, persistência, eventos (Spring Data, Spring Context) |
 | `service/`    | Lógica de negócio da aplicação                                      |
 
