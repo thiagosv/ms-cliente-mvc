@@ -103,7 +103,7 @@ O que será criado*:
 * MongoDB: Porta padrão 27017
 * Kafka: Porta padrão sem auth 9092
 * UI:
-  * MongoDB UI: Porta 8082 (aplicação web para acesso ao MONGO)
+  * MongoDB UI: Porta 8082 (aplicação web para acesso ao MONGO admin:pass)
   * Kafka UI: Porta 8081 (aplicação web para acesso ao KAFKA)
 
 #### Necessário
